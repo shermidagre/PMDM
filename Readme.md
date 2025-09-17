@@ -82,7 +82,7 @@ val persona = Persona("Ana", 25)
 
 #### **3. Funciones**
 
-[cite\_start]En Java, la sintaxis es verbosa y el tipo de retorno va al principio[cite: 3].
+En Java, la sintaxis es verbosa y el tipo de retorno va al principio.
 
 ```java
 // Java
@@ -91,7 +91,7 @@ public int sumar(int a, int b) {
 }
 ```
 
-En Kotlin, las funciones se declaran con la palabra clave **`fun`**, y el tipo de retorno va al final. Además, puedes usar una sintaxis de una sola expresión para funciones cortas. [cite\_start]Es mucho más legible[cite: 3].
+En Kotlin, las funciones se declaran con la palabra clave **`fun`**, y el tipo de retorno va al final. Además, puedes usar una sintaxis de una sola expresión para funciones cortas. Es mucho más legible.
 
 ```kotlin
 // Kotlin
