@@ -1,10 +1,12 @@
 package example.myapp
 import java.lang.Math.PI
-class Aquarium(open var length: Int = 100,open var width: Int = 20, open var height: Int = 40) {
+open class Aquarium(open var length: Int = 100,open var width: Int = 20, open var height: Int = 40) {
 init {
     println("Inicializando aquarium")
 }
     fun printSize() {
+
+        println(shape)
         println("Width: $width cm " +
                 "Length: $length cm " +
                 "Height: $height cm ")
@@ -28,9 +30,20 @@ init {
 
     open var shape ="recangle"
     open val water : Double
-        get ()= volume * 1000().toDouble()
+        get ()= (volume * 1000).toDouble()
 
+    class TowerTank (override var height: Int, var diameter: Int): Aquarium(height = height, width = diameter, length = diameter) {
+        override var volume: Int
+            // ellipse area = π * r1 * r2
+            get() = (width/2 * length/2 * height / 1000 * PI).toInt()
+            set(value) {
+                height = ((value * 1000 / PI) / (width/2 * length/2)).toInt()
+            }
 
+        override val water: Double
+            get() = volume * 0.8
+        override var shape = "cylinder"
+    }
 
 }
 fun buildAquarium() {
@@ -47,7 +60,7 @@ fun buildAquarium() {
 
     val myAquarium = Aquarium(width = 25, length = 25, height = 40)
     myAquarium.printSize()
-    val myTower = TowerTank(diameter = 25, height = 40)
+    val myTower = Aquarium.TowerTank(diameter = 25, height = 40)
     myTower.printSize()
 
 
@@ -57,15 +70,3 @@ fun main() {
     buildAquarium()
 }
 
-class TowerTank (override var height: Int, var diameter: Int): Aquarium(height = height, width = diameter, length = diameter) {
-    override var volume: Int
-        // ellipse area = π * r1 * r2
-        get() = (width/2 * length/2 * height / 1000 * PI).toInt()
-        set(value) {
-            height = ((value * 1000 / PI) / (width/2 * length/2)).toInt()
-        }
-
-    override val water: Double
-        get() = volume * 0.8
-    override var shape = "cylinder"
-}
