@@ -29,8 +29,9 @@ init {
         }
 
     open var shape ="recangle"
-    open val water : Double
-        get ()= (volume * 1000).toDouble()
+    open var water: Double = 0.0
+        get() = volume * 0.9
+
 
     class TowerTank (override var height: Int, var diameter: Int): Aquarium(height = height, width = diameter, length = diameter) {
         override var volume: Int
@@ -40,7 +41,7 @@ init {
                 height = ((value * 1000 / PI) / (width/2 * length/2)).toInt()
             }
 
-        override val water: Double
+        override var water: Double = 0.0
             get() = volume * 0.8
         override var shape = "cylinder"
     }
