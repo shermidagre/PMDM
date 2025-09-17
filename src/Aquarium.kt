@@ -27,17 +27,13 @@ init {
         }
 
     open var shape ="recangle"
-    open var water : Double = 0.0
-        get ()= (volume * 1000).toDouble()
+    open val water : Double
+        get ()= volume * 1000().toDouble()
 
 
 
 }
 fun buildAquarium() {
-    val myAquarium = Aquarium()
-    myAquarium.printSize();
-    myAquarium.height = 50
-    myAquarium.printSize();
     val aquarium1 = Aquarium()
     aquarium1.printSize()
     val aquarium2 = Aquarium(length = 50, width = 30)
@@ -49,12 +45,10 @@ fun buildAquarium() {
     val aquarium4 = Aquarium(length = 25, width = 25, height = 40)
     aquarium4.printSize()
 
-    fun buildAquarium() {
-        val myAquarium = Aquarium(width = 25, length = 25, height = 40)
-        myAquarium.printSize()
-        val myTower = TowerTank(diameter = 25, height = 40)
-        myTower.printSize()
-    }
+    val myAquarium = Aquarium(width = 25, length = 25, height = 40)
+    myAquarium.printSize()
+    val myTower = TowerTank(diameter = 25, height = 40)
+    myTower.printSize()
 
 
 }
@@ -71,6 +65,7 @@ class TowerTank (override var height: Int, var diameter: Int): Aquarium(height =
             height = ((value * 1000 / PI) / (width/2 * length/2)).toInt()
         }
 
-    override var water = volume * 0.8
-    override val shape = "cylinder"
+    override val water: Double
+        get() = volume * 0.8
+    override var shape = "cylinder"
 }
