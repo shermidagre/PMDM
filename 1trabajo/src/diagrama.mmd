@@ -38,12 +38,12 @@ Idle --> Error: Error inesperado
 haciendocafe --> Error: Fallo durante preparación
 echandoazucar --> Error: Fallo al echar azúcar
 sirviendocafe --> echandoavaso: "Echando el vaso"
-echandoavaso --> cogervaso: Esperando a coger el vaso
-cogervaso --> Error: Fallo al coger vaso
-echandoavaso --> cogervaso: Vaso cogido
-cogervaso --> limpiarmaquina:  Vaso cogido, se puede limpiar
-limpiarmaquina --> Idle: Máquina reiniciada
-limpiarmaquina --> Error: Fallo al limpiar
+echandoavaso --> cogiendovaso: Esperando a coger el vaso
+cogiendovaso --> Error: Fallo al coger vaso
+echandoavaso --> cogiendovaso: Vaso cogido
+cogiendovaso --> limpiandomaquina:  Vaso cogido, se puede limpiar
+limpiandomaquina --> Idle: Máquina reiniciada
+limpiandomaquina --> Error: Fallo al limpiar
 note right of Idle: Estado inicial. Espera orden para hacer café.
 note right of Error: Contiene mensaje de error. Se limpia para volver a Idle.
 
