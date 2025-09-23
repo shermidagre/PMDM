@@ -1,10 +1,11 @@
 ---
-title: Máquina de Café - Diagrama de Estados (Kotlin)
+title: Máquina de Café - Diagrama de Estados
 ---
 stateDiagram-v2
 [*] --> Idle
-Idle --> echarazucar: Usuario pide azúcar
-Idle --> haciendocafe: Sin azúcar → directo a hacer café
+Idle --> solicitarcafe: Usuario pide café
+solicitarcafe --> echarazucar: Usuario pide azúcar
+solicitarcafe --> haciendocafe: Cafe in azúcar → directo a hacer café
 echarazucar --> haciendocafe: Termina de echar azúcar
 haciendocafe --> sirviendocafe: Café preparado (sirviendocafe('Nescafé'))
 sirviendocafe --> Idle: Usuario toma café + limpieza manual

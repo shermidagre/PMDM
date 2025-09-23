@@ -2,7 +2,6 @@ import java.util.Locale
 import java.util.Locale.getDefault
 
 fun main() {
-
 MaquinadelCafe.hacercafe()
 
     MaquinadelCafe.limpiarmaquina()
@@ -54,6 +53,14 @@ object MaquinadelCafe {
         object haciendocafe : estadomaquinacafe()
         data class sirviendocafe(val brand: String) : estadomaquinacafe()
         data class Error(val message: String) : estadomaquinacafe()
+    }
+
+    fun pedircafe(cafe: String) {
+        println("Pedimos $cafe...")
+        Thread.sleep(1000)
+        println("Preparando el $cafe...")
+        Thread.sleep(2000)
+        println("$cafe listo!")
     }
 
     fun cogervaso() {
