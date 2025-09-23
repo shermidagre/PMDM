@@ -22,7 +22,8 @@ requisitosaprobados --> comprobandoRequisitos
 Azucar --> sinazucar: Cafe sin azúcar
 sinazucar --> Error : Fallo al echar azucar
 
-requisitosaprobados --> solicitarcafe: Se puede pedir café
+comprobandoRequisitos --> solicitarcafe: Se puede hacer cafe
+comprobandoRequisitos --> Error: Fallo al comprobar requisitos
 requisitosaprobados --> Error: Fallo al comprobar requisitos
 
 comprobarsisepuedehacercafe --> Error: Fallo al comprobar café
