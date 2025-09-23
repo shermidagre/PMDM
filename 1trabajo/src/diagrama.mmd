@@ -4,10 +4,12 @@ title: Máquina de Café - Diagrama de Estados
 stateDiagram-v2
 [*] --> Idle
 Idle --> solicitarcafe: Usuario pide café
-comprobaragua --> Error: Fallo al comprobar agua
+solicitarcafe --> comprobaragua: Comprobar agua
 comprobaragua --> Agua: Agua disponible
 Agua --> Error: Fallo al comprobar agua
-Agua --> solicitarcafe: Se puede pedir café
+comprobaragua --> solicitarcafe: Se puede pedir café
+comprobaragua --> Error: Fallo al comprobar agua
+
 solicitarcafe --> solicitarazucar: Usuario pide azúcar
 solicitarcafe --> combrobarazucar: Comprobar azúcar
 Azucar --> Error: Fallo al comprobar azúcar
