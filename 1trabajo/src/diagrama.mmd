@@ -5,7 +5,7 @@ stateDiagram-v2
 [*] --> Idle
 Idle --> solicitarcafe: Usuario pide café
 solicitarcafe --> echarazucar: Usuario pide azúcar
-solicitarcafe --> haciendocafe: Cafe in azúcar → directo a hacer café
+solicitarcafe --> haciendocafe: Cafe sin azúcar → directo a hacer café
 echarazucar --> haciendocafe: Termina de echar azúcar
 haciendocafe --> sirviendocafe: Café preparado (sirviendocafe('Nescafé'))
 sirviendocafe --> Idle: Usuario toma café + limpieza manual
@@ -13,6 +13,10 @@ sirviendocafe --> Error: Fallo durante servicio
 Idle --> Error: Error inesperado
 haciendocafe --> Error: Fallo durante preparación
 echarazucar --> Error: Fallo al echar azúcar
+sirviendocafe --> echaravaso: "Echa el vaso"
+echaravaso --> Idle: Usuario toma café
+echaravaso --> limpiarmaquina: Máquina reiniciada (limpiarmaquina())
+echaravaso --> Error: Fallo al echar vaso
 Error --> Idle: Máquina reiniciada (limpiarmaquina())
 note right of Idle: Estado inicial. Espera orden para hacer café.
 note right of sirviendocafe: Contiene marca como propiedad del estado.
