@@ -4,19 +4,22 @@ title: Máquina de Café - Diagrama de Estados
 stateDiagram-v2
 [*] --> Idle
 Idle --> solicitarcafe: Usuario pide café
+
 solicitarcafe --> comprobaragua: Comprobar agua
 comprobaragua --> Agua: Agua disponible
 Agua --> Error: Fallo al comprobar agua
-comprobaragua --> solicitarcafe: Se puede pedir café
+Agua --> solicitarcafe: Se puede pedir café
 comprobaragua --> Error: Fallo al comprobar agua
 
-solicitarcafe --> solicitarazucar: Usuario pide azúcar
-solicitarcafe --> combrobarazucar: Comprobar azúcar
+solicitarcafe --> comprobarazucar : Usuario pide azúcar
+comprobarazucar --> Azucar: Azúcar disponible
 Azucar --> Error: Fallo al comprobar azúcar
 Azucar --> solicitarcafe: Se puede pedir café con azúcar
+
 solicitarcafe --> echarazucar: Usuario pide azúcar
+echarazucar --> haciendocafe: Cafe con azúcar
+
 solicitarcafe --> haciendocafe: Cafe sin azúcar → directo a hacer café
-echarazucar --> haciendocafe: Termina de echar azúcar
 haciendocafe --> sirviendocafe: Café preparado (sirviendocafe('Nescafé'))
 sirviendocafe --> Error: Fallo durante servicio
 Idle --> Error: Error inesperado
