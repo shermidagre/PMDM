@@ -8,16 +8,18 @@ Idle --> comprobarsisepuedehacercafe: Usuario pide café
 comprobarsisepuedehacercafe --> comprobaragua: Comprobar agua
 comprobaragua --> Agua: Agua disponible
 Agua --> Error: Fallo al comprobar agua
-Agua --> solicitarcafe: Se puede pedir café
+Agua --> requisitosaprobados: Se puede pedir café
 comprobaragua --> Error: Fallo al comprobar agua
 
 comprobarsisepuedehacercafe --> comprobarazucar : Usuario pide azúcar
 comprobarazucar --> Azucar: Azúcar disponible
 Azucar --> Error: Fallo al comprobar azúcar
-Azucar --> solicitarcafe: Se puede pedir café con azúcar
+Azucar --> requisitosaprobados: Se puede pedir café con azúcar
+
+requisitosaprobados --> solicitarcafe: Se puede pedir café
+requisitosaprobados --> Error: Fallo al comprobar requisitos
 
 comprobarsisepuedehacercafe --> Error: Fallo al comprobar café
-comprobarsisepuedehacercafe --> solicitarcafe: Se puede pedir café sin azúcar
 solicitarcafe --> echarazucar: Usuario pide azúcar
 echarazucar --> haciendocafe: Cafe con azúcar
 
