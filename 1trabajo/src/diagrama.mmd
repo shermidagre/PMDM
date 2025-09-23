@@ -8,7 +8,6 @@ solicitarcafe --> echarazucar: Usuario pide azúcar
 solicitarcafe --> haciendocafe: Cafe sin azúcar → directo a hacer café
 echarazucar --> haciendocafe: Termina de echar azúcar
 haciendocafe --> sirviendocafe: Café preparado (sirviendocafe('Nescafé'))
-sirviendocafe --> Idle: Usuario toma café + limpieza manual
 sirviendocafe --> Error: Fallo durante servicio
 Idle --> Error: Error inesperado
 haciendocafe --> Error: Fallo durante preparación
@@ -17,7 +16,7 @@ sirviendocafe --> echaravaso: "Echa el vaso"
 echaravaso --> cogervaso: Esperando a coger el vaso
 cogervaso --> Error: Fallo al coger vaso
 echaravaso --> cogervaso: Vaso cogido
-echaravaso --> limpiarmaquina: Máquina reiniciada (limpiarmaquina())
+cogervaso --> limpiarmaquina: Máquina reiniciada (limpiarmaquina())
 limpiarmaquina --> Idle: Máquina reiniciada (limpiarmaquina())
 Error --> Idle: Máquina reiniciada (limpiarmaquina())
 note right of Idle: Estado inicial. Espera orden para hacer café.
