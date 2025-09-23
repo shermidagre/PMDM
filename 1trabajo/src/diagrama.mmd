@@ -14,9 +14,11 @@ Idle --> Error: Error inesperado
 haciendocafe --> Error: Fallo durante preparación
 echarazucar --> Error: Fallo al echar azúcar
 sirviendocafe --> echaravaso: "Echa el vaso"
-echaravaso --> Idle: Usuario toma café
+echaravaso --> cogervaso: Esperando a coger el vaso
+cogervaso --> Error: Fallo al coger vaso
+echaravaso --> cogervaso: Vaso cogido
 echaravaso --> limpiarmaquina: Máquina reiniciada (limpiarmaquina())
-echaravaso --> Error: Fallo al echar vaso
+limpiarmaquina --> Idle: Máquina reiniciada (limpiarmaquina())
 Error --> Idle: Máquina reiniciada (limpiarmaquina())
 note right of Idle: Estado inicial. Espera orden para hacer café.
 note right of sirviendocafe: Contiene marca como propiedad del estado.
