@@ -9,10 +9,8 @@ comprobaragua --> Agua: Agua disponible
 Agua --> Error: Fallo al comprobar agua
 Agua --> solicitarcafe: Se puede pedir café
 solicitarcafe --> solicitarazucar: Usuario pide azúcar
-solicitarcafe --> comprarazucar: Comprobar azúcar
-comprarazucar --> Error: Fallo al comprar azúcar
-comprarazucar --> Azucar: Azúcar disponible
-Azucar --> Error: Fallo al comprar azúcar
+solicitarcafe --> combrobarazucar: Comprobar azúcar
+Azucar --> Error: Fallo al comprobar azúcar
 Azucar --> solicitarcafe: Se puede pedir café con azúcar
 solicitarcafe --> echarazucar: Usuario pide azúcar
 solicitarcafe --> haciendocafe: Cafe sin azúcar → directo a hacer café
