@@ -10,7 +10,7 @@ MaquinadelCafe.hacercafe()
 
 
 object MaquinadelCafe {
-    private var estadoactual: estadomaquinacafe = estadomaquinacafe.Idle
+    var estadoactual: estadomaquinacafe = estadomaquinacafe.Idle
 
     fun hacercafe() {
         println("Depuracion : ${estadoactual.hashCode()}")
