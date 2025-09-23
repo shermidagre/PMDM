@@ -22,25 +22,25 @@ requisitosaprobados --> comprobandoRequisitos
 Azucar --> sinazucar: Cafe sin azúcar
 sinazucar --> Error : Fallo al echar azucar
 
-comprobandoRequisitos --> solicitarcafe: Se puede hacer cafe
+comprobandoRequisitos --> solicitandocafe: Se puede hacer cafe
 comprobandoRequisitos --> Error: Fallo al comprobar requisitos
 requisitosaprobados --> Error: Fallo al comprobar requisitos
 
 comprobarsisepuedehacercafe --> Error: Fallo al comprobar café
-solicitarcafe --> echarazucar: Usuario pide azúcar
-solicitarcafe --> sinazucar: Usuario pide café sin azúcar
-echarazucar --> haciendocafe: Cafe con azúcar
+solicitandocafe --> echandoazucar: Usuario pide azúcar
+solicitandocafe --> sinazucar: Usuario pide café sin azúcar
+echandoazucar --> haciendocafe: Cafe con azúcar
 sinazucar --> haciendocafe: Cafe sin azúcar
 
 haciendocafe --> sirviendocafe: Café preparado (sirviendocafe('Nescafé'))
 sirviendocafe --> Error: Fallo durante servicio
 Idle --> Error: Error inesperado
 haciendocafe --> Error: Fallo durante preparación
-echarazucar --> Error: Fallo al echar azúcar
-sirviendocafe --> echaravaso: "Echando el vaso"
-echaravaso --> cogervaso: Esperando a coger el vaso
+echandoazucar --> Error: Fallo al echar azúcar
+sirviendocafe --> echandoavaso: "Echando el vaso"
+echandoavaso --> cogervaso: Esperando a coger el vaso
 cogervaso --> Error: Fallo al coger vaso
-echaravaso --> cogervaso: Vaso cogido
+echandoavaso --> cogervaso: Vaso cogido
 cogervaso --> limpiarmaquina:  Vaso cogido, se puede limpiar
 limpiarmaquina --> Idle: Máquina reiniciada
 limpiarmaquina --> Error: Fallo al limpiar
