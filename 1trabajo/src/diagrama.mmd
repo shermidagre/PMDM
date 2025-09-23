@@ -6,11 +6,12 @@ stateDiagram-v2
 Idle --> comprobarsisepuedehacercafe: Usuario pide café
 
 comprobarsisepuedehacercafe --> comprobaragua: Comprobar agua
+agua --> Error : No hay agua, no se puede hacer café
 comprobaragua --> Agua: Agua disponible
 Agua --> requisitosaprobados: Se puede pedir café
 comprobaragua --> Error: Fallo al comprobar agua
 
-comprobarsisepuedehacercafe --> comprobarazucar : Usuario pide azúcar
+comprobarsisepuedehacercafe --> comprobarazucar : Comprobar si hay azucar
 comprobarazucar --> Azucar: Azúcar disponible
 comprobarazucar --> Error : Fallo al comprobar azúcar
 Azucar --> requisitosaprobados: Se puede pedir café con azúcar
