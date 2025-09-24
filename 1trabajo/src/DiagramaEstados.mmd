@@ -1,68 +1,67 @@
 ---
+config:
+  theme: forest
 title: Máquina de Café - Diagrama de Estados
 ---
-stateDiagram-v2
-
-    [*] --> Idle
-
-    Idle --> Error : "Error inesperado"
-    ComprobandoRecursos --> Error
-    PreparandoCafe --> Error : "Fallo durante preparación"
-    Sirviendo --> Error : "Fallo durante servicio"
-    EchandoVaso --> Error
-    Limpiando --> Error
-
-    state Error {
-        [*] --> MostrandoError
-        MostrandoError --> Limpiando : "Reiniciar tras error"
-    }
-
-    note right of Error
-        Estado de error. Todas las fallas llevan aquí.
-    end note
-
+stateDiagram
+    direction RL
     state Idle {
+        direction TB
         [*] --> EsperandoOrden
-        EsperandoOrden --> ComprobandoRecursos : "Usuario pide café"
-        EsperandoOrden --> Error : "Error inesperado"
+        EsperandoOrden --> ComprobandoRecursos:"Usuario pide café"
+        state ComprobandoRecursos {
+            direction TB
+            [*] --> VerificandoAgua
+            VerificandoAgua --> VerificandoAzucar:"Agua disponible"
+            VerificandoAzucar --> RecursosOK:"Azúcar disponible o no requerida"
+            [*]      VerificandoAgua
+            VerificandoAzucar
+            RecursosOK
+        }
     }
-
-    state ComprobandoRecursos {
-        [*] --> VerificandoAgua
-        VerificandoAgua --> VerificandoAzucar : "Agua disponible"
-        VerificandoAgua --> Error : "No hay agua"
-        VerificandoAgua --> Error : "Fallo al verificar agua"
-
-        VerificandoAzucar --> RecursosOK : "Azúcar disponible o no requerida"
-        VerificandoAzucar --> Error : "Fallo al verificar azúcar"
+    state Error {
+        direction TB
+        [*] --> MostrandoError
+        [*]    MostrandoError
     }
-
-    RecursosOK --> PreparandoCafe : "Iniciar preparación"
-
     state PreparandoCafe {
+        direction TB
         [*] --> DecidiendoAzucar
-        DecidiendoAzucar --> ConAzucar : "Usuario quiere azúcar"
-        DecidiendoAzucar --> SinAzucar : "Sin azúcar"
-
-        ConAzucar --> Sirviendo : "Azúcar añadido"
-        ConAzucar --> Error : "Fallo al añadir azúcar"
-
-        SinAzucar --> Sirviendo : "Preparando café sin azúcar"
+        DecidiendoAzucar --> ConAzucar:"Usuario quiere azúcar"
+        DecidiendoAzucar --> SinAzucar:"Sin azúcar"
+        ConAzucar --> Sirviendo:"Azúcar añadido"
+        SinAzucar --> Sirviendo:"Preparando café sin azúcar"
+        [*]    DecidiendoAzucar
+        ConAzucar
+        SinAzucar
+        Sirviendo
     }
-
-    Sirviendo --> EchandoVaso : "Café listo (Nescafé)"
-    Sirviendo --> Error : "Fallo durante servicio"
-
     state EchandoVaso {
+        direction TB
+        Limpiando --> Error
         [*] --> EsperandoVaso
-        EsperandoVaso --> Limpiando : "Vaso colocado"
-        EsperandoVaso --> Error : "Fallo al colocar vaso"
+        EsperandoVaso --> Limpiando:"Vaso colocado"
+        EsperandoVaso --> Error:"Fallo al colocar vaso"
+        state Error {
+            direction TB
+            [*]      MostrandoError
+        }
     }
-
-    Limpiando --> Idle : "Limpieza completada"
-    Limpiando --> Error : "Fallo al limpiar"
-
-    note right of Idle
-        Estado inicial. Espera orden para hacer café.
-    end note
-
+    [*] --> Idle
+    Idle --> Error:"Error inesperado"
+    ComprobandoRecursos --> Error
+    PreparandoCafe --> Error:"Fallo durante preparación"
+    EchandoVaso --> Error
+    MostrandoError --> Limpiando:"Reiniciar tras error"
+    EsperandoOrden --> Error:"Error inesperado"
+    VerificandoAgua --> Error:"No hay agua"
+    VerificandoAgua --> Error:"Fallo al verificar agua"
+    VerificandoAzucar --> Error:"Fallo al verificar azúcar"
+    RecursosOK --> PreparandoCafe:"Iniciar preparación"
+    ConAzucar --> Error:"Fallo al añadir azúcar"
+    Sirviendo --> EchandoVaso:"Café listo (Nescafé)"
+    Sirviendo --> Error:"Fallo durante servicio"
+    Limpiando --> Idle:"Limpieza completada"
+    note right of Error : Estado de error. Todas las fallas llevan aquí.
+    note right of Idle : Estado inicial. Espera orden para hacer café.
+    note right of EchandoVaso : Despues de que se eche el vaso, comienza a limpiar la maquina
