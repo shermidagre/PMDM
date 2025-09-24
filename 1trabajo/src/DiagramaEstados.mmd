@@ -49,6 +49,11 @@ stateDiagram-v2
     Limpiando --> Idle : "Limpieza completada"
     Limpiando --> Error : "Fallo al limpiar"
 
+%% Estado de error
+    state Error {
+        [*] --> MostrandoError
+        MostrandoError --> Limpiando : "Reiniciar tras error"
+    }
 
     note right of Idle
         Estado inicial. Espera orden para hacer café.
