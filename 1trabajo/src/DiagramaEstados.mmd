@@ -33,10 +33,10 @@ stateDiagram-v2
 
         SinAzucar --> Sirviendo : "Preparando café sin azúcar"
 
-    %% Fallo durante preparación (general)
-        PreparandoCafe --> Error : "Fallo durante preparación"
-    }
 
+    }
+    %% Fallo durante preparación (general)
+    PreparandoCafe --> Error : "Fallo durante preparación"
     Sirviendo --> EchandoVaso : "Café listo (Nescafé)"
     Sirviendo --> Error : "Fallo durante servicio"
 
@@ -45,6 +45,9 @@ stateDiagram-v2
         EsperandoVaso --> Limpiando : "Vaso colocado"
         EsperandoVaso --> Error : "Fallo al colocar vaso"
     }
+
+    Limpiando --> Idle : "Limpieza completada"
+    Limpiando --> Error : "Fallo al limpiar"
 
 %% Estado de error
     state Error {
