@@ -55,12 +55,11 @@ stateDiagram-v2
         MostrandoError --> Limpiando : "Reiniciar tras error"
     }
 
-%% Notas
-    note right of Idle.EsperandoOrden
+    note right of Idle
         Estado inicial. Espera orden para hacer café.
     end note
 
-    note right of Error.MostrandoError
+    note right of Error
         Contiene mensaje de error.
         Se limpia para volver a Idle.
     end note
