@@ -1,0 +1,59 @@
+stateDiagram-v2
+    title: Máquina de Café - Diagrama de Estados
+
+    [*] --> Idle
+
+    state Idle {
+        [*] --> EsperandoOrden
+        EsperandoOrden --> ComprobandoRecursos : "Usuario pide café"
+    }
+
+    state ComprobandoRecursos {
+        [*] --> VerificandoAgua
+        VerificandoAgua --> VerificandoAzucar : "Agua disponible"
+        VerificandoAgua --> Error : "No hay agua"
+        VerificandoAgua --> Error : "Fallo al verificar agua"
+
+        VerificandoAzucar --> RecursosOK : "Azúcar disponible o no requerida"
+        VerificandoAzucar --> Error : "Fallo al verificar azúcar"
+    }
+
+    RecursosOK --> PreparandoCafe : "Iniciar preparación"
+
+    state PreparandoCafe {
+        [*] --> DecidiendoAzucar
+        DecidiendoAzucar --> ConAzucar : "Usuario quiere azúcar"
+        DecidiendoAzucar --> SinAzucar : "Sin azúcar"
+
+        ConAzucar --> Sirviendo : "Azúcar añadido"
+        ConAzucar --> Error : "Fallo al añadir azúcar"
+
+        SinAzucar --> Sirviendo : "Preparando café sin azúcar"
+    }
+
+    Sirviendo --> EchandoVaso : "Café listo, sirviendo"
+
+    state EchandoVaso {
+        [*] --> EsperandoVaso
+        EsperandoVaso --> Limpiando : "Vaso colocado"
+        EsperandoVaso --> Error : "Fallo al colocar vaso"
+    }
+
+    Limpiando --> Idle : "Limpieza completada"
+    Limpiando --> Error : "Fallo en limpieza"
+
+%% Estados de error
+    state Error {
+        [*] --> MostrandoError
+        MostrandoError --> Limpiando : "Reiniciar tras error"
+    }
+
+%% Notas
+    note right of Idle.EsperandoOrden
+        Estado inicial. Espera orden para hacer café.
+    end note
+
+    note right of Error.MostrandoError
+        Contiene mensaje de error.
+        Se limpia para volver a Idle.
+    end note
