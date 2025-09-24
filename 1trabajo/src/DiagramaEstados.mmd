@@ -54,7 +54,6 @@ stateDiagram
     VerificandoAzucar --> Error:"Fallo al verificar azúcar"
     RecursosOK --> PreparandoCafe:"Iniciar preparación"
     Sirviendo --> EchandoVaso:"Café listo (Nescafé)"
-    Sirviendo --> Error:"Fallo durante servicio"
     Limpiando --> Idle:"Limpieza completada"
     note right of Error : Estado de error. Todas las fallas llevan aquí.
     note left of Idle : Estado inicial. Espera orden para hacer café.
