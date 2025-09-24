@@ -46,9 +46,6 @@ stateDiagram-v2
         EsperandoVaso --> Error : "Fallo al colocar vaso"
     }
 
-    Limpiando --> Idle : "Limpieza completada"
-    Limpiando --> Error : "Fallo al limpiar"
-
 %% Estado de error
     state Error {
         [*] --> MostrandoError
