@@ -7,8 +7,8 @@ stateDiagram-v2
 
     Idle --> Error : "Error inesperado"
     ComprobandoRecursos --> Error
-    PreparandoCafe --> Error
-    Sirviendo --> Error
+    PreparandoCafe --> Error : "Fallo durante preparación":::errorArrow
+    Sirviendo --> Error : "Fallo durante servicio"
     EchandoVaso --> Error
     Limpiando --> Error
 
@@ -50,9 +50,6 @@ stateDiagram-v2
         SinAzucar --> Sirviendo : "Preparando café sin azúcar"
     }
 
-%% ✅ CORREGIDO: transición externa fuera del bloque
-    PreparandoCafe --> Error : "Fallo durante preparación"
-
     Sirviendo --> EchandoVaso : "Café listo (Nescafé)"
     Sirviendo --> Error : "Fallo durante servicio"
 
@@ -65,7 +62,9 @@ stateDiagram-v2
     Limpiando --> Idle : "Limpieza completada"
     Limpiando --> Error : "Fallo al limpiar"
 
-
     note right of Idle
         Estado inicial. Espera orden para hacer café.
     end note
+
+%% Estilo para la flecha de error en PreparandoCafe
+    classDef errorArrow stroke:#ff0000,stroke-width:2px;
