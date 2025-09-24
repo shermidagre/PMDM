@@ -31,7 +31,6 @@ stateDiagram-v2
     }
     state EchandoVaso {
         direction TB
-        [*] --> EsperandoVaso
         EsperandoVaso --> Limpiando: "Vaso colocado"
         EsperandoVaso --> Error: "Fallo al colocar vaso"
     }
