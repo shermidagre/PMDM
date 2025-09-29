@@ -5,6 +5,12 @@ plugins {
     kotlin("plugin.spring") version "1.8.20"
     kotlin("plugin.jpa") version "1.8.20"
 }
+springBoot {
+    mainClass.set("com.example.cafetera.CafeteraQRApplicationKt")
+}
+kotlin {
+    jvmToolchain(17)
+}
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
@@ -22,12 +28,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-
-    // QR
     implementation("com.google.zxing:core:3.5.1")
     implementation("com.google.zxing:javase:3.5.1")
-
-    // PostgreSQL para Supabase
     runtimeOnly("org.postgresql:postgresql")
 }
 

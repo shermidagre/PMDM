@@ -1,0 +1,21 @@
+---
+config:
+  theme: mc
+title: Máquina de Café - Diagrama de Estados (Kotlin)
+---
+stateDiagram
+    direction BT
+    [*] --> Idle
+    Idle --> echarazucar:Usuario pide azúcar
+    Idle --> haciendocafe:Sin azúcar → directo a hacer café
+    echarazucar --> haciendocafe:Termina de echar azúcar
+    haciendocafe --> sirviendocafe:Café preparado (sirviendocafe('Nescafé'))
+    sirviendocafe --> Idle:Usuario toma café + limpieza manual
+    sirviendocafe --> Error:Fallo durante servicio
+    Idle --> Error:Error inesperado
+    haciendocafe --> Error:Fallo durante preparación
+    echarazucar --> Error:Fallo al echar azúcar
+    Error --> Idle:Máquina reiniciada (limpiarmaquina())
+    note left of Idle : Estado inicial. Espera orden para hacer café.
+    note right of sirviendocafe : Contiene marca como propiedad del estado.
+    note right of Error : Contiene mensaje de error. Se limpia para volver a Idle.

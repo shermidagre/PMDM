@@ -1,3 +1,6 @@
+import kotlin.compareTo
+import kotlin.unaryMinus
+
 fun main() {
     MaquinadelCafe.iniciar()
 }
@@ -14,8 +17,37 @@ object MaquinadelCafe {
                 }
                 is EstadoMaquinaCafe.MenuSeleccionCafe -> {
                     val tipoCafe = interfaz.pedirTipoCafe()
-                    estadoactual = EstadoMaquinaCafe.ComprobandoRecursos(tipoCafe)
+                    estadoactual = EstadoMaquinaCafe.ComprobandoImporte(tipoCafe, when (tipoCafe) {
+                        "solo" -> 0.40
+                        "leche" -> 0.50
+                        "capuchino" -> 0.60
+                        else -> 0.0
+                    })
                 }
+
+                is EstadoMaquinaCafe.ComprobandoImporte -> {
+                    val datos = estadoactual as EstadoMaquinaCafe.ComprobandoImporte
+                    val tipoCafe = datos.tipoCafe
+                    val importe = datos.importe
+                    interfaz.mostrarMensaje("El precio del café $tipoCafe es $importe €. Por favor, inserta el importe.")
+                    do {
+                        var dineroInsertado = readLine()?.toDoubleOrNull() ?: 0.0
+                        var cambio = dineroInsertado - importe
+                        if (cambio > 0.0) {
+                            interfaz.mostrarMensaje("Has insertado $dineroInsertado €. Tu cambio es $cambio €.")
+                            estadoactual = EstadoMaquinaCafe.ComprobandoRecursos(tipoCafe)
+                            break
+                        } else if (cambio < 0.0) {
+                            interfaz.mostrarMensaje("Has insertado $dineroInsertado €. Te faltan ${-cambio} €.")
+                        } else {
+                            interfaz.mostrarMensaje("Has insertado el importe exacto: $dineroInsertado €.")
+                            estadoactual = EstadoMaquinaCafe.ComprobandoRecursos(tipoCafe)
+                            break
+                        }
+                    } while (true)
+                }
+
+
                 is EstadoMaquinaCafe.ComprobandoRecursos -> {
                     val cafe = (estadoactual as EstadoMaquinaCafe.ComprobandoRecursos).tipoCafe
                     interfaz.mostrarMensaje("Comprobando recursos para $cafe...")
@@ -95,7 +127,6 @@ object MaquinadelCafe {
                     val msg = (estadoactual as EstadoMaquinaCafe.Error).message
                     interfaz.mostrarError(msg)
                     Thread.sleep(500)
-                    estadoactual = EstadoMaquinaCafe.Limpiando
                 }
                 else -> break
             }
@@ -105,6 +136,7 @@ object MaquinadelCafe {
     sealed class EstadoMaquinaCafe {
         object Idle : EstadoMaquinaCafe()
         object MenuSeleccionCafe : EstadoMaquinaCafe()
+        data class ComprobandoImporte(val tipoCafe: String, val importe : Double) : EstadoMaquinaCafe()
         data class ComprobandoRecursos(val tipoCafe: String) : EstadoMaquinaCafe()
         data class VerificandoAgua(val tipoCafe: String) : EstadoMaquinaCafe()
         data class VerificandoAzucar(val tipoCafe: String) : EstadoMaquinaCafe()
