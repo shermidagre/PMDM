@@ -1,7 +1,9 @@
 package com.example.cafetera.cafe
 
 import com.example.cafetera.models.Recurso
+import org.springframework.stereotype.Component
 
+@Component
 class CafeteraAPI {
     fun prepararCafe(tipoCafe: String, conAzucar: Boolean = false) {
         println("Sirviendo $tipoCafe ${if (conAzucar) "con azúcar" else "sin azúcar"}...")

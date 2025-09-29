@@ -3,7 +3,8 @@ package com.example.cafetera.services.impl
 import com.example.cafetera.cafe.CafeteraAPI
 import com.example.cafetera.models.Transaccion
 import com.example.cafetera.models.Usuario
-import com.example.cafetera.repositories.*
+import com.example.cafetera.repositories.MaquinaRepository
+import com.example.cafetera.repositories.TransaccionRepository
 import com.example.cafetera.services.interfaces.CafeteraService
 import com.example.cafetera.services.interfaces.UsuarioService
 import org.springframework.stereotype.Service
@@ -12,8 +13,7 @@ import java.math.BigDecimal
 @Service
 class CafeteraServiceImpl(
     private val usuarioService: UsuarioService,
-    private val maquinaRepository: MaquinaRepository,
-    private val recursoRepository: RecursoRepository,
+    private val maquinaRepository: MaquinaRepository, // Asegúrate de inyectar este repositorio
     private val transaccionRepository: TransaccionRepository,
     private val cafeteraAPI: CafeteraAPI
 ) : CafeteraService {
@@ -24,16 +24,12 @@ class CafeteraServiceImpl(
 
         val importe = getPrecio(tipoCafe)
         if (usuario.saldo >= importe) {
-            if (!verificarRecursos(maquinaId, tipoCafe)) {
-                return "Recursos insuficientes en la máquina."
-            }
-
             val nuevoSaldo = usuario.saldo - importe
             usuarioService.updateSaldo(usuarioId, nuevoSaldo)
 
             val transaccion = Transaccion(
-                usuario = usuario, // Objeto completo
-                maquina = maquina, // Objeto completo
+                usuario = usuario, // No uses copy aquí
+                maquina = maquina, // No uses copy aquí
                 tipoCafe = tipoCafe,
                 importe = importe
             )
@@ -43,11 +39,6 @@ class CafeteraServiceImpl(
             return "Café dispensado."
         }
         return "Saldo insuficiente."
-    }
-
-    private fun verificarRecursos(maquinaId: Int, tipoCafe: String): Boolean {
-        val recursos = recursoRepository.findByMaquinaId(maquinaId)
-        return recursos.all { it.cantidad > 0 }
     }
 
     private fun getPrecio(tipoCafe: String): BigDecimal = when (tipoCafe) {

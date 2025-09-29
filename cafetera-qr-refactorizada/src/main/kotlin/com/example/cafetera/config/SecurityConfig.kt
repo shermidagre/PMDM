@@ -9,18 +9,18 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
+
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers("/qr/**", "/api/comprar", "/login", "/static/**").permitAll()
-                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/login", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                     .anyRequest().authenticated()
             }
             .formLogin { login ->
                 login
-                    .loginPage("/login")
+                    .loginPage("/login") // Página de login personalizada
                     .defaultSuccessUrl("/dashboard", true)
                     .permitAll()
             }

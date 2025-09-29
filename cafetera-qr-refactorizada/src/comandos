@@ -1,0 +1,4 @@
+    Login: http://localhost:8080/login
+    Dashboard admin: http://localhost:8080/dashboard
+    QR Scanner: http://localhost:8080
+    API REST: http://localhost:8080/api/
