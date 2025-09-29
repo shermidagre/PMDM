@@ -1,4 +1,5 @@
 open class InterfazUsuario {
+
     open fun mostrarMensaje(mensaje: String) {
         println(mensaje)
     }

@@ -1,0 +1,3 @@
+-- Tablas ya creadas por JPA
+-- No es necesario inicializar datos aquí si se configura en application.properties
+-- Puedes usar JPA para inicializar datos con un DataLoader si es necesario

@@ -1,0 +1,71 @@
+flowchart TD
+    subgraph Controllers
+        AuthController
+        UsuarioController
+        CafeteraController
+        QRController
+        AdminController
+    end
+
+    subgraph Services
+        subgraph Interfaces
+            UsuarioService
+            CafeteraService
+            QRService
+            NotificacionService
+            AlertaService
+        end
+
+        subgraph Implementaciones
+            UsuarioServiceImpl
+            CafeteraServiceImpl
+            QRServiceImpl
+            NotificacionServiceImpl
+            AlertaServiceImpl
+        end
+    end
+
+    subgraph Repositories
+        UsuarioRepository
+        MaquinaRepository
+        RecursoRepository
+        TransaccionRepository
+        AuditoriaRepository
+    end
+
+    subgraph Models
+        Usuario
+        MaquinaCafe
+        Recurso
+        Transaccion
+        Auditoria
+    end
+
+    subgraph Config
+        SecurityConfig
+        DatabaseConfig
+        CorsConfig
+    end
+
+    subgraph Utils
+        QRGenerator
+        TokenGenerator
+    end
+
+    subgraph Exceptions
+        GlobalExceptionHandler
+    end
+
+    subgraph Cafe
+        CafeteraAPI
+    end
+
+    %% Relaciones principales
+    Controllers --> Interfaces
+    Implementaciones --> Repositories
+    Repositories --> Models
+    Interfaces <--> Implementaciones
+    Controllers --> Exceptions
+    Controllers --> Utils
+    Config --> Controllers
+    Config --> Services

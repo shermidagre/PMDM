@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cafetera QR</title>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+<h1>Escanea tu QR para comprar café</h1>
+<div id="qr-reader" style="width: 500px;"></div>
+<div id="result"></div>
+
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        const [token] = decodedText.split(':');
+        fetch('/qr/usar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({token})
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('result').innerHTML = '<h2>' + data + '</h2>';
+        });
+    }
+
+    let config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    let html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
+    html5QrcodeScanner.render(onScanSuccess);
+</script>
+</body>
+</html>
