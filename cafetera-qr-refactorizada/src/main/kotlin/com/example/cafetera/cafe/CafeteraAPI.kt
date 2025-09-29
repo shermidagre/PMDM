@@ -12,4 +12,5 @@ class CafeteraAPI {
     fun comprobarRecursos(recursos: List<Recurso>): Boolean {
         return recursos.all { it.cantidad > 0 }
     }
+
 }

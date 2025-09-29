@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard de Administrador</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Dashboard de Administrador</h1>
+<div>
+    <h2>Usuarios</h2>
+    <ul id="usuarios-list"></ul>
+</div>
+<div>
+    <h2>Ventas</h2>
+    <canvas id="ventasChart" width="400" height="200"></canvas>
+</div>
+
+<script>
+    // Cargar usuarios
+    fetch('/api/admin/usuarios')
+        .then(response => response.json())
+        .then(data => {
+            const list = document.getElementById('usuarios-list');
+            data.forEach(usuario => {
+                const li = document.createElement('li');
+                li.textContent = `${usuario.nombre} - ${usuario.saldo} €`;
+                list.appendChild(li);
+            });
+        });
+
+    // Gráfico de ventas
+    const ctx = document.getElementById('ventasChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Ene', 'Feb', 'Mar'],
+            datasets: [{
+                label: 'Ventas (€)',
+                data: [50, 60, 70],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
+</body>
+</html>
