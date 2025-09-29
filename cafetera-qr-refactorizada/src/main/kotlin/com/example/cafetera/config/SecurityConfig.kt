@@ -15,7 +15,10 @@ class SecurityConfig {
         http
             .authorizeHttpRequests { authorize ->
                 authorize
+                    // Permitir acceso a vistas públicas
                     .requestMatchers("/login", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
+                    // Permitir acceso a vistas protegidas solo para usuarios autenticados
+                    .requestMatchers("/admin", "/dashboard", "/index").authenticated()
                     .anyRequest().authenticated()
             }
             .formLogin { login ->
