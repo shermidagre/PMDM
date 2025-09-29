@@ -32,8 +32,8 @@ class CafeteraServiceImpl(
             usuarioService.updateSaldo(usuarioId, nuevoSaldo)
 
             val transaccion = Transaccion(
-                usuario = usuario.copy(id = usuarioId),
-                maquina = maquina.copy(id = maquinaId),
+                usuario = usuario, // Objeto completo
+                maquina = maquina, // Objeto completo
                 tipoCafe = tipoCafe,
                 importe = importe
             )

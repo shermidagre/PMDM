@@ -19,5 +19,3 @@ class AdminController(private val usuarioService: UsuarioService) {
         "ingresos_totales" to 150.00
     )
 }
-
-// Añadir método findAll en UsuarioService
