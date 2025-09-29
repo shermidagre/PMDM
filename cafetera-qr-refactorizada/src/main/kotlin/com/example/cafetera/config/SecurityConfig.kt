@@ -23,7 +23,7 @@ class SecurityConfig {
             }
             .formLogin { login ->
                 login
-                    .loginPage("/login") // Página de login personalizada
+                    .loginPage("/dashboard")
                     .defaultSuccessUrl("/dashboard", true)
                     .permitAll()
             }
