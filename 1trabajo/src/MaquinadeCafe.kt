@@ -144,7 +144,7 @@ object MaquinadelCafe {
         data class PreparandoCafe(val tipoCafe: String) : EstadoMaquinaCafe()
         data class DecidiendoAzucar(val tipoCafe: String) : EstadoMaquinaCafe()
         data class ConAzucar(val tipoCafe: String) : EstadoMaquinaCafe()
-        data class SinAzucar(val A: String) : EstadoMaquinaCafe()
+        data class SinAzucar(val tipoCafe: String) : EstadoMaquinaCafe()
         data class Sirviendo(val tipoCafe: String, val azucar: Boolean) : EstadoMaquinaCafe()
         object EchandoVaso : EstadoMaquinaCafe()
         object Limpiando : EstadoMaquinaCafe()
