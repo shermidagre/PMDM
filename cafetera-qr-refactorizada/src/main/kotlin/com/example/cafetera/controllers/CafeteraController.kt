@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class CafeteraController(private val cafeteraService: CafeteraService) {
 
     @PostMapping("/comprar")
-    fun comprarCafe(@Valid @RequestBody req: CompraCafeRequest): String {
+    fun comprarCafe(@RequestBody req: CompraCafeRequest): String {
         return cafeteraService.comprarCafe(req.usuarioId, req.maquinaId, req.tipoCafe, req.conAzucar)
     }
 }

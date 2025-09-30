@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Dashboard</title>
+    <!-- Incluimos la librería del escáner QR -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .dashboard-container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .welcome {
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+        }
+        .info {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .info p {
+            margin: 0.5rem 0;
+            font-size: 1.05rem;
+        }
+        .info strong {
+            color: #333;
+        }
+        /* Estilos del Escáner QR */
+        .qr-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eee;
+            text-align: center;
+        }
+        #qr-reader {
+            width: 100%;
+            max-width: 350px; /* Tamaño fijo para el escáner */
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        #result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: #1a73e8;
+        }
+        .logout-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #e53935;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+        .logout-link:hover {
+            background-color: #c62828;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sección de Información del Usuario -->
+    <div class="welcome">
+        <h2>¡Bienvenido, <span th:text="${usuario.nombre}"></span>!</h2>
+    </div>
+    <div class="info">
+        <h3>Tu Cuenta</h3>
+        <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+        <p><strong>Rol:</strong> <span th:text="${usuario.rolusuario}"></span></p>
+        <p><strong>Saldo:</strong> <span th:text="${usuario.saldo}"></span> €</p>
+    </div>
+
+    <!-- Sección del Escáner QR (Integrado) -->
+    <div class="qr-section">
+        <h3>Escanea el Código QR de la Cafetera</h3>
+        <p>Usa tu cámara para iniciar una compra.</p>
+
+        <!-- Elemento donde se renderizará el escáner -->
+        <div id="qr-reader"></div>
+
+        <!-- Resultado del escaneo -->
+        <div id="result"></div>
+    </div>
+
+    <!-- Enlace de Cerrar Sesión -->
+    <a th:href="@{/logout}" class="logout-link">Cerrar sesión</a>
+</div>
+
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        // La URL del QR probablemente sea algo como "http://[server]/cafe:TOKEN"
+        // Extraemos solo el token después del último dos puntos
+        const parts = decodedText.split(':');
+        const token = parts[parts.length - 1];
+
+        document.getElementById('result').innerHTML = '<h3>Procesando compra...</h3>';
+
+        // Llamada al endpoint del backend para usar el token
+        fetch('/qr/usar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({token: token})
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Mostrar la respuesta del servidor (éxito o error de compra)
+            document.getElementById('result').innerHTML = '<h3>Resultado:</h3><p>' + data + '</p>';
+        })
+        .catch(error => {
+            document.getElementById('result').innerHTML = '<h3>Error de Conexión</h3><p>No se pudo conectar con el servidor.</p>';
+            console.error('Error al procesar QR:', error);
+        });
+    }
+
+    // Configuración del escáner
+    let config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+    // Inicialización del escáner con el ID 'qr-reader'
+    let html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
+
+    // Renderizar el escáner
+    html5QrcodeScanner.render(onScanSuccess);
+</script>
+</body>
+</html>

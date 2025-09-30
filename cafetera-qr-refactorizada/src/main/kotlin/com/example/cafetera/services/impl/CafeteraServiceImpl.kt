@@ -5,22 +5,21 @@ import com.example.cafetera.models.Transaccion
 import com.example.cafetera.models.Usuario
 import com.example.cafetera.repositories.MaquinaRepository
 import com.example.cafetera.repositories.TransaccionRepository
-import com.example.cafetera.services.interfaces.CafeteraService
-import com.example.cafetera.services.interfaces.UsuarioService
+import com.example.cafetera.services.UsuarioService
+import com.example.cafetera.services.interfaces.CafeteraService // Asegúrate de importar la interfaz
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
 @Service
 class CafeteraServiceImpl(
     private val usuarioService: UsuarioService,
-    private val maquinaRepository: MaquinaRepository, // Asegúrate de inyectar este repositorio
+    private val maquinaRepository: MaquinaRepository,
     private val transaccionRepository: TransaccionRepository,
     private val cafeteraAPI: CafeteraAPI
 ) : CafeteraService {
 
-    override fun comprarCafe(usuarioId: Int, maquinaId: Int, tipoCafe: String, conAzucar: Boolean): String {
+   override fun comprarCafe(usuarioId: Int, maquinaId: Int, tipoCafe: String, conAzucar: Boolean): String {
         val usuario = usuarioService.findById(usuarioId) ?: return "Usuario no encontrado."
-        val maquina = maquinaRepository.findById(maquinaId).orElse(null) ?: return "Máquina no encontrada."
 
         val importe = getPrecio(tipoCafe)
         if (usuario.saldo >= importe) {
@@ -28,8 +27,8 @@ class CafeteraServiceImpl(
             usuarioService.updateSaldo(usuarioId, nuevoSaldo)
 
             val transaccion = Transaccion(
-                usuario = usuario, // No uses copy aquí
-                maquina = maquina, // No uses copy aquí
+                usuario = usuario,
+                maquina = maquinaRepository.findById(maquinaId).orElse(null) ?: return "Máquina no encontrada.",
                 tipoCafe = tipoCafe,
                 importe = importe
             )

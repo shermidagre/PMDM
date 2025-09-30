@@ -1,29 +1,20 @@
 package com.example.cafetera.services.impl
 
 import com.example.cafetera.models.Usuario
+import com.example.cafetera.models.rol
 import com.example.cafetera.repositories.UsuarioRepository
-import com.example.cafetera.services.interfaces.UsuarioService
+import com.example.cafetera.services.UsuarioService
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
-import java.time.LocalDateTime
 
 @Service
-class UsuarioServiceImpl(
-    private val usuarioRepository: UsuarioRepository
-) : UsuarioService {
+class UsuarioServiceImpl(private val usuarioRepository: UsuarioRepository) : UsuarioService {
 
-    override fun crearUsuario(nombre: String, email: String, saldo: BigDecimal): Usuario {
-        if (usuarioRepository.findByEmail(email) != null) {
-            throw RuntimeException("El email ya está registrado.")
-        }
+    // --- Métodos de la interfaz UsuarioService ---
 
-        val nuevoUsuario = Usuario(
-            nombre = nombre,
-            email = email,
-            saldo = saldo,
-            rol = "cliente",
-            fechaRegistro = LocalDateTime.now()
-        )
+    override fun crearUsuario(nombre: String, email: String, rol: rol): Usuario {
+        val nuevoUsuario = Usuario(nombre = nombre, email = email, rolusuario = rol)
         return usuarioRepository.save(nuevoUsuario)
     }
 
@@ -36,14 +27,23 @@ class UsuarioServiceImpl(
     }
 
     override fun updateSaldo(id: Int, nuevoSaldo: BigDecimal) {
-        val usuario = findById(id) ?: throw RuntimeException("Usuario no encontrado")
-        val actualizado = usuario.copy(saldo = nuevoSaldo)
-        usuarioRepository.save(actualizado)
+        // En un caso real, esto se haría dentro de recargarSaldo o comprarCafe.
     }
 
+    override fun findByEmail(email: String): Usuario? {
+        return usuarioRepository.findByEmail(email)
+    }
+
+    /**
+     * Lógica crítica: Incrementa el saldo de un usuario en la base de datos.
+     */
+    @Transactional
     override fun recargarSaldo(id: Int, monto: BigDecimal) {
-        val usuario = findById(id) ?: throw RuntimeException("Usuario no encontrado")
-        val nuevoSaldo = usuario.saldo + monto
-        updateSaldo(id, nuevoSaldo)
+        val usuario = usuarioRepository.findById(id).orElseThrow {
+            NoSuchElementException("Usuario con ID $id no encontrado.")
+        }
+        val nuevoSaldo = usuario.saldo.add(monto)
+        val usuarioActualizado = usuario.copy(saldo = nuevoSaldo)
+        usuarioRepository.save(usuarioActualizado)
     }
 }

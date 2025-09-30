@@ -17,12 +17,17 @@ data class Usuario(
     @Column(unique = true, nullable = false)
     val email: String,
 
-    @Column(nullable = false)
-    val saldo: BigDecimal = BigDecimal.ZERO,
+    @Column(name = "rol", nullable = false)
+    @Enumerated(EnumType.STRING)
+    val rolusuario: rol = rol.user,
 
     @Column(nullable = false)
-    val rol: String = "cliente",
+    val saldo: BigDecimal = BigDecimal.ZERO,
 
     @Column(name = "fecha_registro", nullable = false)
     val fechaRegistro: LocalDateTime = LocalDateTime.now()
 )
+
+enum class rol {
+    user, admin
+}
