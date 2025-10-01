@@ -1,0 +1,34 @@
+---
+config:
+  theme: mc
+title: Máquina de Café - Diagrama de Estados
+---
+stateDiagram-v2
+    [*] --> Idle
+    Idle : Estado inicial
+    Menu : Menú de selección
+    Prep : Preparando café
+    Serve : Sirviendo
+    Clean : Limpiando
+    Error : Error
+    Idle
+    Menu
+    Prep
+    Serve
+    Clean
+    Error
+    Idle --> Menu : seleccionar café
+    Menu --> Prep : confirmar selección
+    Prep --> Serve : café listo
+    Serve --> Clean : entrega completada
+    Clean --> Idle : limpieza finalizada
+    Error --> Error : muestraError, espera, repite
+    note right of Prep
+        Contiene: tipoCafe
+    end note
+    note right of Serve
+        Contiene: tipoCafe
+    end note
+    note right of Error
+        Contiene: message
+    end note
