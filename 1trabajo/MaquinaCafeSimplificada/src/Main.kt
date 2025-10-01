@@ -17,6 +17,7 @@ object MaquinadelCafe {
     /**
      * Instancia de la interfaz para interactuar con el usuario (mostrar mensajes, pedir input).
      */
+
     var interfaz = InterfazUsuario()
 
     /**
