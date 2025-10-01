@@ -32,13 +32,11 @@ object MaquinadelCafe {
                     estadoactual = EstadoMaquinaCafe.MenuSeleccionCafe
                 }
                 is EstadoMaquinaCafe.MenuSeleccionCafe -> {
-                    // El smart cast de Kotlin permite acceder al tipo
                     val tipoCafe = interfaz.pedirTipoCafe()
                     estadoactual = EstadoMaquinaCafe.PreparandoCafe(tipoCafe)
                 }
 
                 is EstadoMaquinaCafe.PreparandoCafe -> {
-                    // Mejor práctica: asignar a una variable en el when para evitar el cast feo.
                     val estadoPrep = estadoactual as EstadoMaquinaCafe.PreparandoCafe
                     interfaz.mostrarMensaje("Preparando ${estadoPrep.tipoCafe}...")
                     Thread.sleep(500)
@@ -59,7 +57,6 @@ object MaquinadelCafe {
                 is EstadoMaquinaCafe.Error -> {
                     val estadoError = estadoactual as EstadoMaquinaCafe.Error
                     interfaz.mostrarError(estadoError.message)
-                    // La máquina permanece en estado Error hasta que se rompa el bucle.
                     Thread.sleep(500)
                 }
             }
